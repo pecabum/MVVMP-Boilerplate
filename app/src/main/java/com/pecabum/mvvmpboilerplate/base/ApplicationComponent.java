@@ -1,5 +1,8 @@
 package com.pecabum.mvvmpboilerplate.base;
 
+import com.pecabum.mvvmpboilerplate.data.RepoServiceModule;
+import com.pecabum.mvvmpboilerplate.networking.ServiceModule;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -11,7 +14,9 @@ import dagger.Component;
 @Singleton
 @Component(modules = {
         ApplicationModule.class,
-        ActivityBindingModule.class
+        ActivityBindingModule.class,
+        ServiceModule.class,
+        RepoServiceModule.class,
 })
 public interface ApplicationComponent {
     void inject(MyApplication myApplication);
