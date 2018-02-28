@@ -10,14 +10,10 @@ import dagger.android.AndroidInjector;
  */
 @ScreenScope
 @Subcomponent
-public interface TrendingRepostComponent extends AndroidInjector<TrendingReposController> {
+public interface TrendingReposComponent extends AndroidInjector<TrendingReposController> {
 
     @Subcomponent.Builder
     abstract class Builder extends AndroidInjector.Builder<TrendingReposController> {
-        @Override
-        public void seedInstance(TrendingReposController instance) {
-
-        }
     }
 
 }

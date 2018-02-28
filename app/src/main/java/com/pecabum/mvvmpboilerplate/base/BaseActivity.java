@@ -26,17 +26,13 @@ import javax.inject.Inject;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    private static String INSTANCE_ID_KEY = "instance_id";
+    private static final String INSTANCE_ID_KEY = "instance_id";
 
-    @Inject
-    ScreenInjector screenInjector;
-
-    @Inject
-    ScreenNavigator screenNavigator;
-
-    private Router router;
+    @Inject ScreenInjector screenInjector;
+    @Inject ScreenNavigator screenNavigator;
 
     private String instanceId;
+    private Router router;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -46,8 +42,8 @@ public abstract class BaseActivity extends AppCompatActivity {
             instanceId = UUID.randomUUID().toString();
         }
         Injector.inject(this);
-        setContentView(layoutRes());
 
+        setContentView(layoutRes());
         ViewGroup screenContainer = findViewById(R.id.screen_container);
         if (screenContainer == null) {
             throw new NullPointerException("Activity must have a view with id: screen_container");
@@ -59,49 +55,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
     }
 
-    /**
-     * Adding listener to the Conductor's router in order to monitor
-     * screens changing and clear their injectors
-     */
-    private void monitorBackStack() {
-        router.addChangeListener(new ControllerChangeHandler.ControllerChangeListener() {
-            @Override
-            public void onChangeStarted(@Nullable Controller to,
-                                        @Nullable Controller from,
-                                        boolean isPush,
-                                        @NonNull ViewGroup container,
-                                        @NonNull ControllerChangeHandler handler) {
-
-            }
-
-            @Override
-            public void onChangeCompleted(@Nullable Controller to,
-                                          @Nullable Controller from,
-                                          boolean isPush,
-                                          @NonNull ViewGroup container,
-                                          @NonNull ControllerChangeHandler handler) {
-                if (!isPush && from != null) {
-                    Injector.clearComponent(from);
-                }
-            }
-        });
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(INSTANCE_ID_KEY, instanceId);
     }
 
-
-    /**
-     * Providing the layout from the child activities
-     */
-    @LayoutRes
-    protected abstract int layoutRes();
-
-    /**
-     * We're keeping the method of providing controller abstract in order to allow using multiple activities
-     */
-    protected abstract Controller initialScreen();
-
-    /**
-     * If the screen navigator did not pop then we want to finish the activity
-     * */
     @Override
     public void onBackPressed() {
         if (!screenNavigator.pop()) {
@@ -109,20 +68,15 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        outState.putString(INSTANCE_ID_KEY, instanceId);
-    }
+    @LayoutRes
+    protected abstract int layoutRes();
+
+    protected abstract Controller initialScreen();
 
     public String getInstanceId() {
         return instanceId;
     }
 
-
-    /**
-     * Removing
-     */
     @Override
     protected void onDestroy() {
         super.onDestroy();
@@ -134,5 +88,31 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public ScreenInjector getScreenInjector() {
         return screenInjector;
+    }
+
+    private void monitorBackStack() {
+        router.addChangeListener(new ControllerChangeHandler.ControllerChangeListener() {
+            @Override
+            public void onChangeStarted(
+                    @Nullable Controller to,
+                    @Nullable Controller from,
+                    boolean isPush,
+                    @NonNull ViewGroup container,
+                    @NonNull ControllerChangeHandler handler) {
+
+            }
+
+            @Override
+            public void onChangeCompleted(
+                    @Nullable Controller to,
+                    @Nullable Controller from,
+                    boolean isPush,
+                    @NonNull ViewGroup container,
+                    @NonNull ControllerChangeHandler handler) {
+                if (!isPush && from != null) {
+                    Injector.clearComponent(from);
+                }
+            }
+        });
     }
 }

@@ -1,8 +1,5 @@
 package com.pecabum.mvvmpboilerplate.home;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-
 import com.bluelinelabs.conductor.Controller;
 import com.pecabum.mvvmpboilerplate.R;
 import com.pecabum.mvvmpboilerplate.base.BaseActivity;
