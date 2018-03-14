@@ -1,5 +1,6 @@
 package com.pecabum.mvvmpboilerplate.data;
 
+import com.pecabum.mvvmpboilerplate.model.Contributor;
 import com.pecabum.mvvmpboilerplate.model.Repo;
 
 import java.util.List;
@@ -23,9 +24,16 @@ public class RepoRequester {
         this.service = service;
     }
 
-    public Single<List<Repo>> getTrendingRepos() {
+    Single<List<Repo>> getTrendingRepos() {
         return service.getTrendingRepos()
-                .map(TrendingReposResponse::repos)
-                .subscribeOn(Schedulers.io());
+                .map(TrendingReposResponse::repos);
+    }
+
+    Single<Repo> getRepo(String owner, String name) {
+        return service.getRepo(owner, name);
+    }
+
+    Single<List<Contributor>> getContributors(String url) {
+        return service.getContributors(url);
     }
 }

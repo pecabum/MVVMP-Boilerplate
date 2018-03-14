@@ -1,5 +1,6 @@
 package com.pecabum.mvvmpboilerplate.data;
 
+import com.pecabum.mvvmpboilerplate.model.Repo;
 import com.pecabum.mvvmpboilerplate.test.TestUtils;
 
 import java.io.IOException;
@@ -27,6 +28,11 @@ public class TestRepoService implements RepoService {
             return Single.just(response);
         }
         return Single.error(new IOException());
+    }
+
+    @Override
+    public Single<Repo> getRepo(String owner, String name) {
+        return null;
     }
 
     public void setSendError(boolean sendError) {

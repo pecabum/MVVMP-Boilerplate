@@ -24,7 +24,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.CoreMatchers.allOf;
 
 @RunWith(AndroidJUnit4.class)
-public class TrendingReposControllerTest {
+public class  TrendingReposControllerTest {
 
     @Inject
     TestRepoService repoService;

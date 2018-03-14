@@ -52,6 +52,7 @@ dependencies {
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
 
     implementation "com.jakewharton.timber:timber:$timberVersion"
+    implementation "com.github.bumptech.glide:glide:$glideVersion"
 
     compile "com.jakewharton:butterknife:$butterKnifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$butterKnifeVersion"

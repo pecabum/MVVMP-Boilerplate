@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">MvvmpBoilerplate</string>
+    <string name="creation_date_label">Created:</string>
+    <string name="updated_date_label">Updated</string>
+    <string name="contributors_label">Contributors</string>
+    <string name="content_description_avatar_image">Avatar Image</string>
+
+
     <string name="api_error_repos" >Error loading repos</string>
+    <string name="api_error_single_repo">Error loading repo details</string>
+    <string name="api_error_contributors">Error loading contributors</string>
 </resources>
