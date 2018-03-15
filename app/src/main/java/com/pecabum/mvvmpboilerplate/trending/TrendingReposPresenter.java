@@ -4,6 +4,7 @@ import com.pecabum.mvvmpboilerplate.data.RepoRepository;
 import com.pecabum.mvvmpboilerplate.data.RepoRequester;
 import com.pecabum.mvvmpboilerplate.di.ScreenScope;
 import com.pecabum.mvvmpboilerplate.model.Repo;
+import com.pecabum.mvvmpboilerplate.ui.ScreenNavigator;
 
 import javax.inject.Inject;
 
@@ -16,11 +17,13 @@ class TrendingReposPresenter implements RepoAdapter.RepoClickedListener {
 
     private final TrendingReposViewModel viewModel;
     private final RepoRepository repoRepository;
+    private ScreenNavigator navigator;
 
     @Inject
-    TrendingReposPresenter(TrendingReposViewModel viewModel, RepoRepository repoRequester) {
+    TrendingReposPresenter(TrendingReposViewModel viewModel, RepoRepository repoRequester, ScreenNavigator navigator) {
         this.viewModel = viewModel;
         this.repoRepository= repoRequester;
+        this.navigator = navigator;
         loadRepos();
     }
 
@@ -33,6 +36,6 @@ class TrendingReposPresenter implements RepoAdapter.RepoClickedListener {
 
     @Override
     public void onRepoClicked(Repo repo) {
-
+        navigator.goToRepoDetails(repo.owner().login(),repo.name());
     }
 }

@@ -20,6 +20,8 @@ public interface ScreenNavigator {
      * */
     boolean pop();
 
+    void goToRepoDetails(String owner, String name);
+
     /**
      * Clearing the @{@link Router} value
      * */

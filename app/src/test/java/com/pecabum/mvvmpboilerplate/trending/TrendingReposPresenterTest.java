@@ -4,6 +4,7 @@ import com.pecabum.mvvmpboilerplate.data.RepoRepository;
 import com.pecabum.mvvmpboilerplate.data.TrendingReposResponse;
 import com.pecabum.mvvmpboilerplate.model.Repo;
 import com.pecabum.mvvmpboilerplate.testutils.TestUtils;
+import com.pecabum.mvvmpboilerplate.ui.ScreenNavigator;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,6 +35,9 @@ public class TrendingReposPresenterTest {
     Consumer<List<Repo>> onSuccessConsumer;
     @Mock
     Consumer<Boolean> loadingConsumer;
+    @Mock
+    ScreenNavigator navigator;
+
 
     private TrendingReposPresenter presenter;
 
@@ -87,7 +91,11 @@ public class TrendingReposPresenterTest {
 
     @Test
     public void onRepoClicked() throws Exception {
-        //TODO
+        Repo repo = TestUtils.loadJson("mock/get_repo.json", Repo.class);
+        setUpSuccess();
+        initializePresenter();
+        presenter.onRepoClicked(repo);
+        verify(navigator).goToRepoDetails(repo.owner().login(), repo.name());
     }
 
     private List<Repo> setUpSuccess() {
@@ -107,6 +115,6 @@ public class TrendingReposPresenterTest {
     }
 
     private void initializePresenter() {
-        presenter = new TrendingReposPresenter(viewModel, repoRepository);
+        presenter = new TrendingReposPresenter(viewModel, repoRepository, navigator);
     }
 }
